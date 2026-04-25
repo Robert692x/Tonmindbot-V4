@@ -1,0 +1,51 @@
+version: "3.9"
+
+services:
+  bot:
+    build: .
+    container_name: tonmindbot
+    restart: unless-stopped
+    env_file: .env
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis:    { condition: service_healthy }
+    networks: [tonnet]
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: tonmind_pg
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: tonmindbot
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks: [tonnet]
+
+  redis:
+    image: redis:7-alpine
+    container_name: tonmind_redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks: [tonnet]
+
+volumes:
+  pg_data:
+  redis_data:
+
+networks:
+  tonnet:
+    driver: bridge
