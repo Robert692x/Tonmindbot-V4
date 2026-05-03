@@ -1,10 +1,36 @@
+# Telegram bot framework
+# aiogram 3.7.0 requires pydantic>=2.4.1,<2.8 — keep fastapi in the same range
 aiogram==3.7.0
-aiohttp==3.9.5
+
+# OpenAI SDK — 2.x has client.responses.create (Responses API)
+openai>=2.0.0
+
+# FastAPI backend + ASGI server (pinned below 0.115 to stay compatible with pydantic<2.8)
+fastapi>=0.110.0,<0.115.0
+uvicorn[standard]>=0.29.0
+
+# Retry logic
+tenacity>=8.3.0
+
+# Database
 sqlalchemy[asyncio]==2.0.30
 asyncpg==0.29.0
+aiosqlite==0.20.0
 alembic==1.13.1
-redis[hiredis]==5.0.4
+
+# HTTP clients
+aiohttp==3.9.5
+httpx==0.27.0
+
+# Config & validation
+pydantic>=2.4.1,<2.8
 pydantic-settings==2.2.1
 python-dotenv==1.0.1
-openai==1.30.1
-httpx==0.27.0
+
+# Caching
+redis[hiredis]==5.0.4
+
+# Charts
+matplotlib>=3.7.0
+mplfinance>=0.12.9b1
+pandas>=2.0.0

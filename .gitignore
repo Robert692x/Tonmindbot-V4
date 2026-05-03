@@ -1,8 +1,16 @@
+# System
+.tonmindbot.lock
+bot.db
 .env
+
+# Python
 __pycache__/
 *.pyc
-.venv/
-venv/
-logs/
-*.log
+
+# IDE
+.vscode/
+.claude/
+
+# OS
 .DS_Store
+Thumbs.db

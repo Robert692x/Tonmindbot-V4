@@ -1,12 +1,30 @@
 from aiogram import Dispatcher
-from bot.handlers.start import router as start_router
-from bot.handlers.wallet import router as wallet_router
-from bot.handlers.ai_handler import router as ai_router
-from bot.handlers.misc import router as misc_router
+
+from bot.handlers import (
+    admin_wallets, ai, alerts, analytics, chart, dex, errors,
+    launchpad, leaderboard, portfolio, premium, price, profile,
+    settings, start, trade, wallet, wallet_manager, watchlist, whales,
+)
 
 
-def register_all_handlers(dp: Dispatcher) -> None:
-    dp.include_router(start_router)
-    dp.include_router(wallet_router)
-    dp.include_router(ai_router)
-    dp.include_router(misc_router)
+def include_routers(dispatcher: Dispatcher) -> None:
+    dispatcher.include_router(errors.router)
+    dispatcher.include_router(start.router)
+    dispatcher.include_router(settings.router)
+    dispatcher.include_router(wallet.router)
+    dispatcher.include_router(wallet_manager.router)
+    dispatcher.include_router(admin_wallets.router)
+    dispatcher.include_router(portfolio.router)
+    dispatcher.include_router(leaderboard.router)
+    dispatcher.include_router(analytics.router)
+    dispatcher.include_router(price.router)
+    dispatcher.include_router(whales.router)
+    dispatcher.include_router(chart.router)
+    dispatcher.include_router(dex.router)
+    dispatcher.include_router(launchpad.router)
+    dispatcher.include_router(alerts.router)
+    dispatcher.include_router(ai.router)
+    dispatcher.include_router(premium.router)
+    dispatcher.include_router(profile.router)
+    dispatcher.include_router(trade.router)
+    dispatcher.include_router(watchlist.router)
